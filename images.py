@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 import os
 import uuid
 from os.path import splitext, basename
-api_key="563492ad6f917000010000015031c2e866844a36aad17755cd144b6f"
+api_key=os.environ['api_key']
 
 queried ={}
 h=open('queried.txt','r')
@@ -56,30 +56,4 @@ def getPhoto(searchterm):
         qJson = json.dumps(queried)
         upDateQueries(searchterm,"new")
         setNewItem(qJson)   
-        return pics
-def getPhot(searchterm):
-    queried_items = list(queried.keys())
-    if searchterm in queried_items:
-        now = datetime.now() 
-        f=open("pexels_queries.txt","a")    
-        f.write(f"{now},{searchterm},repeat\n")
-        f.close()
-        print("SEARCH TERM!!!",queried[searchterm])
-        return queried[searchterm]
-    else:    
-        pics = list()
-        api.search(searchterm,page=1,results_per_page=15)
-        photos=api.get_entries()
-        for photo in photos:
-            photographer=photo.photographer
-            url = photo.url
-            pair = (url,photographer)
-            pics.append(pair)
-
-        now = datetime.now()    
-        f=open("pexels_queries.txt","a")    
-        f.write(f"{now},{searchterm},new\n")
-        f.close()
-        print("NEW!!!!!",pics)
-        queried[searchterm] = pics
         return pics
