@@ -2,5 +2,5 @@ __pycache__
 venv
 Pipfile
 Pipfile.lock
-pexel_queries.txt
+pexels_queries.txt
 queried.txt
