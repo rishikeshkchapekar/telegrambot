@@ -15,3 +15,4 @@
 ## v0.0.3 (18/1/21)
 
 * Added image command
+* Fixed image bug

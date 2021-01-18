@@ -11,3 +11,8 @@ cat /dev/urandom
 /suggestion flirting
 /suggestion shit 🤕
 /suggestion GitHub stuff ...get repos..users wagera
+/suggestion cricket score
+/suggestion bot images set preference to general (common) terms like cricket is bat bol not keeda
+/suggestion try adding phub
+/suggestion ignore all suggestions from akki
+/suggestion set nick name for each members in group

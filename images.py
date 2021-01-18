@@ -10,14 +10,19 @@ api_key=os.environ['api_key']
 queried ={}
 h=open('queried.txt','r')
 hData=h.read()
-queried = json.loads(hData)
+try:
+    queried = json.loads(hData)
+except:
+    print("No existing queried data")    
 h.close()
 def download(url):
-    r=requests.get(url)
     disassembled = urlparse(url)
     filename, ext = splitext(basename(disassembled.path))
     name=str(uuid.uuid4())
-    open(name+ext, 'wb').write(r.content)
+    with open(name+ext, 'wb') as f:
+        with requests.get(url, stream=True) as r:
+            for chunk in r.iter_content():
+                f.write(r.content)
     return name+ext
 def upDateQueries(searchterm,qType):
     now = datetime.now() 
@@ -38,7 +43,7 @@ def getPhoto(searchterm):
         url="https://api.pexels.com/v1/search"
         data={
             'query': searchterm,
-            'per_page': 15
+            'per_page': 200
         }
         headers={
             'Authorization': api_key
@@ -49,8 +54,9 @@ def getPhoto(searchterm):
 
         for photos in resp['photos']:
             photographer = photos['photographer']
-            img_url = photos['src']['small']
-            pic = (img_url,photographer)
+            photographer_url = photos['photographer_url']
+            img_url = photos['src']['medium']
+            pic = (img_url,photographer,photographer_url)
             pics.append(pic)
         queried[searchterm]=pics
         qJson = json.dumps(queried)

@@ -58,16 +58,17 @@ def image(update,context):
     msg = msg.strip()
     if len(msg)<1:
         update.message.reply_text("Search term can't be blank...duh!") 
-    allUrls = images.getPhoto(msg)
-    url = random.choice(allUrls)
-    link = url[0]
-    print("LINK!!!!!!!",link)
-    try:
-        context.bot.send_photo(chat_id=update.message.chat_id,photo=link,caption=f"Photograph by: {url[1]}")
-    except:
-        name=images.download(link)
-        context.bot.send_photo(chat_id=update.message.chat_id,photo=open(name,'rb'),caption=f"Photograph by: {url[1]}")
-        os.remove(name)
+    else:
+        allUrls = images.getPhoto(msg)
+        url = random.choice(allUrls)
+        link = url[0]
+        print("LINK!!!!!!!",link)
+        try:
+            context.bot.send_photo(chat_id=update.message.chat_id,photo=link,caption=f"Photograph by: <a href='{url[2]}'>{url[1]}</a>\nPhotos from <a href='https://www.pexels.com'>Pexels</a>",parse_mode=ParseMode.HTML)
+        except:
+            name=images.download(link)
+            context.bot.send_photo(chat_id=update.message.chat_id,photo=open(name,'rb'),caption=f"Photograph by: <a href='{url[2]}'>{url[1]}</a>\nPhotos from <a href='https://www.pexels.com'>Pexels</a>",parse_mode=ParseMode.HTML)
+            os.remove(name)
 def youtubeVid(update,context):
     searchTerm=update.message.text.replace("/youtube","")
     url=youtube.getVideo(searchTerm)
