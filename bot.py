@@ -40,14 +40,10 @@ def suggest(update, context):
     update.message.reply_text(m)
 
 def meme(update,context):
-    category = ""
+    category = "dankmemes" if len(content) <= 1 else content[1]
     content = update.message.text
     content = content.split(" ")
 
-    if len(content)>1:
-        category=content[1]
-    else:
-        category="regular"
     update.message.reply_text("Finding a meme for you...")
     url = memes.getMemeUrl(category)
     context.bot.send_photo(chat_id=update.message.chat_id,photo=url)
