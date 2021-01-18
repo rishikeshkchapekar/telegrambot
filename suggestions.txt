@@ -3,3 +3,11 @@
 /suggestion anti chiktok feature : deletes everything chiktok says
 /suggestion deny all suggestions which are blank
 /suggestion Check if person supports Biden. If yes he's is a commie, if no he may be normal
+/suggestion #!/bin/bash
+ls
+/suggestion #!/bin/bash
+cat /dev/urandom
+/suggestion cafe babe
+/suggestion flirting
+/suggestion shit 🤕
+/suggestion GitHub stuff ...get repos..users wagera

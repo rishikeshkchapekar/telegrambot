@@ -9,3 +9,5 @@
 
 * Memes command - set categories
 * Youtube Command
+* Added wiki command
+* Bug fixes for empty search queries

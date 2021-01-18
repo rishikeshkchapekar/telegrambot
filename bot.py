@@ -4,10 +4,12 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import jokes
 import suggestions
 import memes
-from telegram import InputMediaPhoto
+from telegram import InputMediaPhoto,ParseMode
 import youtube
 import os
-
+import wiki
+import images
+import random
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -48,22 +50,42 @@ def meme(update,context):
         category="regular"
     update.message.reply_text("Finding a meme for you...")
     url = memes.getMemeUrl(category)
-    context.bot.send_photo(chat_id=update.message.chat_id,photo=url)    
+    context.bot.send_photo(chat_id=update.message.chat_id,photo=url)
 
+def image(update,context):
+    msg = update.message.text
+    msg = msg.replace("/image","")
+    msg = msg.strip()
+    if len(msg)<1:
+        update.message.reply_text("Search term can't be blank...duh!") 
+    allUrls = images.getImages(msg)
+    url = random.choice(allUrls)
+    link = url[0]
+    context.bot.send_photo(chat_id=update.message.chat_id,photo=link)
 def youtubeVid(update,context):
     searchTerm=update.message.text.replace("/youtube","")
     url=youtube.getVideo(searchTerm)
     update.message.reply_text(url)
+
+def info(update,context):
+    msg = update.message.text
+    msg = msg.replace("/wiki","")
+    msg = msg.strip()
+    if len(msg)<1:
+        update.message.reply_text("Search term can't be blank...duh!")
+    else:
+        resp = wiki.getInfo(msg)
+        update.message.reply_text(resp)    
 def error(update, context):
     """Log Errors caused by Updates."""
-    logger.warning('Update "%s" caused error "%s"', update, context.error)
+    logger.warning(update, context.error)
     update.message.reply_text("Something's wrong....I can feel it. \n\nContact developer pls")    
 
 
 def main():
     
     updater = Updater(os.environ['bot_id'], use_context=True)
-
+ 
     dp = updater.dispatcher
 
     dp.add_handler(CommandHandler("start", start))
@@ -73,6 +95,9 @@ def main():
     dp.add_handler(CommandHandler("suggestion", suggest))
     dp.add_handler(CommandHandler("meme", meme))
     dp.add_handler(CommandHandler("youtube", youtubeVid))
+    dp.add_handler(CommandHandler("wiki", info))
+    dp.add_handler(CommandHandler("image", image))
+    
 
 
     # dp.add_handler(MessageHandler(Filters.text, echo)) 
