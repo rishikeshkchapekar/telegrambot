@@ -5,9 +5,13 @@
 * Initial build
 * /jokes command
 
-## v0.0.2 (17/1/12)
+## v0.0.2 (17/1/21)
 
 * Memes command - set categories
 * Youtube Command
 * Added wiki command
 * Bug fixes for empty search queries
+
+## v0.0.3 (18/1/21)
+
+* Added image command
