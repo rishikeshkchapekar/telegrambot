@@ -10,6 +10,7 @@ import os
 import wiki
 import images
 import random
+import urlshortener
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -65,6 +66,17 @@ def image(update,context):
             name=images.download(link)
             context.bot.send_photo(chat_id=update.message.chat_id,photo=open(name,'rb'),caption=f"Photograph by: <a href='{url[2]}'>{url[1]}</a>\nPhotos from <a href='https://www.pexels.com'>Pexels</a>",parse_mode=ParseMode.HTML)
             os.remove(name)
+
+def shorten(update,context):
+    msg = update.message.text
+    msg = msg.replace("/shorten","")
+    msg = msg.strip()
+    if len(msg)<1:
+        update.message.reply_text("URL term can't be blank...duh!") 
+    else:
+        short=urlshortener.shortenUrl(msg)
+        update.message.reply_text(short)
+
 def youtubeVid(update,context):
     searchTerm=update.message.text.replace("/youtube","")
     url=youtube.getVideo(searchTerm)
@@ -100,7 +112,7 @@ def main():
     dp.add_handler(CommandHandler("youtube", youtubeVid))
     dp.add_handler(CommandHandler("wiki", info))
     dp.add_handler(CommandHandler("image", image))
-    
+    dp.add_handler(CommandHandler("shorten", shorten))
 
 
     # dp.add_handler(MessageHandler(Filters.text, echo)) 

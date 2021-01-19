@@ -16,3 +16,5 @@
 
 * Added image command
 * Fixed image bug
+* Link shortener
+* Dynamic categories for memes
