@@ -43,7 +43,7 @@ def suggest(update, context):
 def meme(update,context):
     content = update.message.text
     content = content.split(" ")
-    category = "dankmemes" if len(content) <= 1 else content[1]
+    category = "dankmemes" if len(content) <= 1 else " ".join(content[1:])
 
     update.message.reply_text("Finding a meme for you...")
     url = memes.getMemeUrl(category)
