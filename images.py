@@ -5,7 +5,8 @@ from urllib.parse import urlparse
 import os
 import uuid
 from os.path import splitext, basename
-api_key=os.environ['api_key']
+import random
+client_id = os.environ['imgur_id']
 
 queried ={}
 h=open('queried.txt','r')
@@ -33,33 +34,18 @@ def setNewItem(jsonString):
     g=open('queried.txt','w')
     g.write(jsonString)
     g.close()    
-def getPhoto(searchterm):
-    terms = queried.keys()
-    if searchterm in terms:
-        upDateQueries(searchterm,"repeat")
-        return queried[searchterm]
-    else:    
-        pics = list()
-        url="https://api.pexels.com/v1/search"
-        data={
-            'query': searchterm,
-            'per_page': 200
-        }
-        headers={
-            'Authorization': api_key
-        }
-        response = requests.get(url,headers=headers,params=data)
-        resp = response.text
-        resp = json.loads(resp)
-
-        for photos in resp['photos']:
-            photographer = photos['photographer']
-            photographer_url = photos['photographer_url']
-            img_url = photos['src']['medium']
-            pic = (img_url,photographer,photographer_url)
-            pics.append(pic)
-        queried[searchterm]=pics
-        qJson = json.dumps(queried)
-        upDateQueries(searchterm,"new")
-        setNewItem(qJson)   
-        return pics
+def getPhoto(query):
+    url="https://api.imgur.com/3/gallery/search/top/0"
+    params={
+        "q": query
+    }
+    headers={
+        'Authorization':f'Client-ID {client_id}'
+    }
+    response = requests.get(url,headers=headers,params=params)
+    resp = response.text
+    jsonData = json.loads(resp)
+    data = jsonData['data']
+    img = random.choice(data)
+    url=img['link']
+    return url

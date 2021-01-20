@@ -11,6 +11,7 @@ import wiki
 import images
 import random
 import urlshortener
+import test_images
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -56,15 +57,13 @@ def image(update,context):
     if len(msg)<1:
         update.message.reply_text("Search term can't be blank...duh!") 
     else:
-        allUrls = images.getPhoto(msg)
-        url = random.choice(allUrls)
-        link = url[0]
+        link = images.getPhoto(msg)
         print("LINK!!!!!!!",link)
         try:
-            context.bot.send_photo(chat_id=update.message.chat_id,photo=link,caption=f"Photograph by: <a href='{url[2]}'>{url[1]}</a>\nPhotos from <a href='https://www.pexels.com'>Pexels</a>",parse_mode=ParseMode.HTML)
+            context.bot.send_photo(chat_id=update.message.chat_id,photo=link)
         except:
             name=images.download(link)
-            context.bot.send_photo(chat_id=update.message.chat_id,photo=open(name,'rb'),caption=f"Photograph by: <a href='{url[2]}'>{url[1]}</a>\nPhotos from <a href='https://www.pexels.com'>Pexels</a>",parse_mode=ParseMode.HTML)
+            context.bot.send_photo(chat_id=update.message.chat_id,photo=open(name,'rb'))
             os.remove(name)
 
 def shorten(update,context):

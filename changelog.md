@@ -18,3 +18,7 @@
 * Fixed image bug
 * Link shortener
 * Dynamic categories for memes
+
+## 19/1/21
+
+* Switched to Imgur API for images

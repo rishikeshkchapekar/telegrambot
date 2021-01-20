@@ -19,6 +19,6 @@ Any developer contributing to this bot agrees to follow these guidelines.Any dev
 ## APIs Used
 
 * Telegram Bot API : https://core.telegram.org/bots/api
-* Images - Pexels API : https://www.pexels.com/api/documentation/
+* Images - Imgur API : https://apidocs.imgur.com/
 * Memes - Reddit API : https://www.reddit.com/dev/api/
 * Link Shortener - Bit.ly API: https://dev.bitly.com/
