@@ -11,7 +11,7 @@ import wiki
 import images
 import random
 import urlshortener
-import test_images
+
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
